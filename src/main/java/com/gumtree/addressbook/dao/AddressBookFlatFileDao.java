@@ -9,24 +9,27 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import static java.lang.Integer.*;
 import static java.lang.String.format;
 import static java.time.LocalDate.*;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 public class AddressBookFlatFileDao implements AddressBookDao
 {
-    private List<AddressBookEntry> addressBook;
+    private static final String DATA_FILE_KEY = "AddressBookFlatFileDao.datafilekey";
+    private static final String ASSUME_20TH_CENT_AFTER = "AddressBookFlatFileDao.assume20thcentuaryafter";
+
+    List<AddressBookEntry> addressBook;
     private String dataSource;
     private int assume20thCentuaryAfter;
 
-    public AddressBookFlatFileDao(String dataSource, int assume20thCentuaryAfter)
+    public AddressBookFlatFileDao(Properties properties)
     {
-        this.dataSource = dataSource;
-        this.assume20thCentuaryAfter = assume20thCentuaryAfter;
+        this.dataSource = properties.getProperty(DATA_FILE_KEY);
+        this.assume20thCentuaryAfter = parseInt(properties.getProperty(ASSUME_20TH_CENT_AFTER));
         loadFromFlatFile();
     }
 

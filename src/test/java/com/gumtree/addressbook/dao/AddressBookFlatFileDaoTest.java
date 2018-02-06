@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 public class AddressBookFlatFileDaoTest
 {
-    private static AddressBookFlatFileDao dao = new AddressBookFlatFileDao("testAddressBook", 17);
+    private static AddressBookFlatFileDao dao = new AddressBookFlatFileDao(null);
 
     @Test
     public void testFindAll() throws Exception
@@ -39,6 +39,6 @@ public class AddressBookFlatFileDaoTest
     @Test(expected = RuntimeException.class)
     public void testInvalidDataFile()
     {
-        new AddressBookFlatFileDao("testBadAddressBook", 17);
+        new AddressBookFlatFileDao(null);
     }
 }

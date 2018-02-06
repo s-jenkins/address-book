@@ -1,4 +1,4 @@
-package com.gumtree.addressbook.service;
+package com.gumtree.addressbook.resolver;
 
 import com.gumtree.addressbook.domain.AddressBookEntry;
 
