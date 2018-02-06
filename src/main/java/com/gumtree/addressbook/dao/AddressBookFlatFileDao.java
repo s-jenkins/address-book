@@ -1,14 +1,81 @@
 package com.gumtree.addressbook.dao;
 
 import com.gumtree.addressbook.domain.AddressBookEntry;
+import com.gumtree.addressbook.domain.Sex;
 
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+
+import static java.lang.Integer.*;
+import static java.lang.String.format;
+import static java.time.LocalDate.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class AddressBookFlatFileDao implements AddressBookDao
 {
-    @Override
-    public Set<AddressBookEntry> findAll()
+    private List<AddressBookEntry> addressBook;
+    private String dataSource;
+    private int assume20thCentuaryAfter;
+
+    public AddressBookFlatFileDao(String dataSource, int assume20thCentuaryAfter)
     {
-        return null;
+        this.dataSource = dataSource;
+        this.assume20thCentuaryAfter = assume20thCentuaryAfter;
+        loadFromFlatFile();
+    }
+
+    private void loadFromFlatFile()
+    {
+        URL url = this.getClass()
+                .getClassLoader()
+                .getResource(dataSource);
+        Path data = Paths.get(url.getPath());
+        List<String> contents = null;
+        try
+        {
+            contents = Files.readAllLines(data);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(format("Fatal error passing datafile: %s", dataSource), e);
+        }
+        addressBook = parseContents(contents);
+    }
+
+    private List<AddressBookEntry> parseContents(List<String> contents)
+    {
+        return contents.stream().map(d -> parseEntry(d)).collect(toList());
+    }
+
+    /**
+     * Function to parse a text address book entry delimited by commas (name, sex, dob).
+     * Date of birth (dob) is delimited by "/" for each date component
+     * @param detail - string containing name, sex and dob (comma delimited)
+     * @return an AddressBookEntry
+     */
+    private AddressBookEntry parseEntry(String detail)
+    {
+        String[] values = detail.split(",");
+        AddressBookEntry entry = new AddressBookEntry();
+        entry.setName(values[0].trim());
+        entry.setSex(Sex.valueOf(values[1].trim().toUpperCase()));
+        String[] dob = values[2].trim().split("/");
+        int year = parseInt(dob[2]);
+        year = year > assume20thCentuaryAfter ? year + 1900 : year + 2000;
+        LocalDate dobDate = of(year, parseInt(dob[1]), parseInt(dob[0]));
+        entry.setDob(dobDate);
+        return entry;
+    }
+
+    @Override
+    public List<AddressBookEntry> findAll()
+    {
+        return addressBook;
     }
 }
