@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,9 @@ public class AddressBookFlatFileDaoTest
         assertEquals(5, entries.size());
         assertEquals(entries.get(1).getName(), "Paul Robinson");
         assertEquals(entries.get(1).getSex(), MALE);
+        assertEquals(entries.get(1).getDob(), LocalDate.of(1985, 1, 15));
         assertEquals(entries.get(3).getName(), "Sarah Stone");
         assertEquals(entries.get(3).getSex(), FEMALE);
+        assertEquals(entries.get(3).getDob(), LocalDate.of(1980, 9, 20));
     }
 }
