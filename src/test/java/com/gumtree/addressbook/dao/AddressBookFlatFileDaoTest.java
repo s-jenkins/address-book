@@ -1,6 +1,7 @@
 package com.gumtree.addressbook.dao;
 
 import com.gumtree.addressbook.domain.AddressBookEntry;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -10,15 +11,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
+import static com.gumtree.addressbook.dao.AddressBookFlatFileDao.ASSUME_20TH_CENT_AFTER;
+import static com.gumtree.addressbook.dao.AddressBookFlatFileDao.DATA_FILE_KEY;
 import static com.gumtree.addressbook.domain.Sex.FEMALE;
 import static com.gumtree.addressbook.domain.Sex.MALE;
 import static org.junit.Assert.*;
 
 public class AddressBookFlatFileDaoTest
 {
-    private static AddressBookFlatFileDao dao = new AddressBookFlatFileDao(null);
+
+    private static AddressBookFlatFileDao dao;
+
+    @BeforeClass
+    public static void init() {
+
+        Properties props = new Properties();
+        props.setProperty(DATA_FILE_KEY, "testAddressBook");
+        props.setProperty(ASSUME_20TH_CENT_AFTER, "17");
+        dao = new AddressBookFlatFileDao(props);
+    }
 
     @Test
     public void testFindAll() throws Exception

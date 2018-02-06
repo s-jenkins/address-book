@@ -1,5 +1,6 @@
 package com.gumtree.addressbook.dao;
 
+import com.gumtree.addressbook.Config;
 import com.gumtree.addressbook.domain.AddressBookEntry;
 import com.gumtree.addressbook.domain.Sex;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import static com.gumtree.addressbook.Config.*;
 import static java.lang.Integer.*;
 import static java.lang.String.format;
 import static java.time.LocalDate.*;
@@ -19,8 +21,8 @@ import static java.util.stream.Collectors.toList;
 
 public class AddressBookFlatFileDao implements AddressBookDao
 {
-    private static final String DATA_FILE_KEY = "AddressBookFlatFileDao.datafilekey";
-    private static final String ASSUME_20TH_CENT_AFTER = "AddressBookFlatFileDao.assume20thcentuaryafter";
+    public static final String DATA_FILE_KEY = "AddressBookFlatFileDao.datafilekey";
+    public static final String ASSUME_20TH_CENT_AFTER = "AddressBookFlatFileDao.assume20thcentuaryafter";
 
     List<AddressBookEntry> addressBook;
     private String dataSource;
@@ -37,12 +39,7 @@ public class AddressBookFlatFileDao implements AddressBookDao
     {
         try
         {
-            URL url = this.getClass()
-                    .getClassLoader()
-                    .getResource(dataSource);
-            Path data = Paths.get(url.getPath());
-            List<String> contents = null;
-            contents = Files.readAllLines(data);
+            List<String> contents = readFile(dataSource, this);
             addressBook = parseContents(contents);
         }
         catch (Exception e)

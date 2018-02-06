@@ -29,9 +29,4 @@ public class SexCounter implements Resolver
         long count = data.stream().filter(e -> e.getSex() == sex).count();
         return format("There are %s %s(s) in the given data", count, sex.toString().toLowerCase());
     }
-
-    private void fail(String message)
-    {
-        throw new RuntimeException(message);
-    }
 }
