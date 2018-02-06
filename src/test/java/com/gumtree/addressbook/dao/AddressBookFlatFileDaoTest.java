@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 public class AddressBookFlatFileDaoTest
 {
-    private static AddressBookFlatFileDao dao = new AddressBookFlatFileDao("AddressBook", 17);
+    private static AddressBookFlatFileDao dao = new AddressBookFlatFileDao("testAddressBook", 17);
 
     @Test
     public void testFindAll() throws Exception
@@ -31,5 +31,8 @@ public class AddressBookFlatFileDaoTest
         assertEquals(entries.get(3).getName(), "Sarah Stone");
         assertEquals(entries.get(3).getSex(), FEMALE);
         assertEquals(entries.get(3).getDob(), LocalDate.of(1980, 9, 20));
+        assertEquals(entries.get(4).getName(), "Michael Jackson");
+        assertEquals(entries.get(4).getSex(), MALE);
+        assertEquals(entries.get(4).getDob(), LocalDate.of(2016, 8, 14));
     }
 }
