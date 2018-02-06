@@ -32,20 +32,20 @@ public class AddressBookFlatFileDao implements AddressBookDao
 
     private void loadFromFlatFile()
     {
-        URL url = this.getClass()
-                .getClassLoader()
-                .getResource(dataSource);
-        Path data = Paths.get(url.getPath());
-        List<String> contents = null;
         try
         {
+            URL url = this.getClass()
+                    .getClassLoader()
+                    .getResource(dataSource);
+            Path data = Paths.get(url.getPath());
+            List<String> contents = null;
             contents = Files.readAllLines(data);
+            addressBook = parseContents(contents);
         }
         catch (Exception e)
         {
             throw new RuntimeException(format("Fatal error passing datafile: %s", dataSource), e);
         }
-        addressBook = parseContents(contents);
     }
 
     private List<AddressBookEntry> parseContents(List<String> contents)

@@ -35,4 +35,10 @@ public class AddressBookFlatFileDaoTest
         assertEquals(entries.get(4).getSex(), MALE);
         assertEquals(entries.get(4).getDob(), LocalDate.of(2016, 8, 14));
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testInvalidDataFile()
+    {
+        new AddressBookFlatFileDao("testBadAddressBook", 17);
+    }
 }
