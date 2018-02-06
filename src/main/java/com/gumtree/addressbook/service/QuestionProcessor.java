@@ -1,7 +1,6 @@
 package com.gumtree.addressbook.service;
 
-public class QuestionProcessor
+public interface QuestionProcessor
 {
-    process(String question, Cl)
-    process(String question, Cl)
+    String process(String question, Resolver resolver, String... parms);
 }
