@@ -31,7 +31,8 @@ public class AddressBookFlatFileDaoTest
         Properties props = new Properties();
         props.setProperty(DATA_FILE_KEY, "testAddressBook");
         props.setProperty(ASSUME_20TH_CENT_AFTER, "17");
-        dao = new AddressBookFlatFileDao(props);
+        dao = new AddressBookFlatFileDao();
+        dao.setProperties(props);
     }
 
     @Test
@@ -53,6 +54,7 @@ public class AddressBookFlatFileDaoTest
     @Test(expected = RuntimeException.class)
     public void testInvalidDataFile()
     {
-        new AddressBookFlatFileDao(null);
+        AddressBookFlatFileDao badDao = new AddressBookFlatFileDao();
+        badDao.setProperties(null);
     }
 }

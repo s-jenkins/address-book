@@ -28,7 +28,7 @@ public class AddressBookFlatFileDao implements AddressBookDao
     private String dataSource;
     private int assume20thCentuaryAfter;
 
-    public AddressBookFlatFileDao(Properties properties)
+    public void setProperties(Properties properties)
     {
         this.dataSource = properties.getProperty(DATA_FILE_KEY);
         this.assume20thCentuaryAfter = parseInt(properties.getProperty(ASSUME_20TH_CENT_AFTER));
