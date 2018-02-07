@@ -25,9 +25,8 @@ public class AgeComparator implements Resolver
         {
             fail("Cannot find entries for comparison");
         }
-        long days = DAYS.between(e2.getDob(), e1.getDob());
+        long days = DAYS.between(e1.getDob(), e2.getDob());
         String answer = String.format("%s is %s days older than %s", e1.getName(), days, e2.getName());
-        System.out.println(answer);
         return answer;
     }
 }

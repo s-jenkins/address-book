@@ -21,17 +21,17 @@ public class AgeComparatorTest
         list.add(entry);
 
         entry = new AddressBookEntry();
-        entry.setDob(LocalDate.of(1981, 04, 16));        entry.setName("Eney");
+        entry.setDob(LocalDate.of(1981, 04, 1));        entry.setName("Eney");
         entry.setName("Meeny");
         list.add(entry);
 
         entry = new AddressBookEntry();
-        entry.setDob(LocalDate.of(1981, 04, 6));
+        entry.setDob(LocalDate.of(1981, 04, 9));
         entry.setName("Miny");
         list.add(entry);
 
         entry = new AddressBookEntry();
-        entry.setDob(LocalDate.of(1981, 04, 9));
+        entry.setDob(LocalDate.of(1981, 04, 6));
         entry.setName("Mo");
         list.add(entry);
 
@@ -41,7 +41,7 @@ public class AgeComparatorTest
 
         answer = resolver.answer(list,"Miny", "Meeny");
 
-        assertTrue(answer.contains("Miny is -10 days older than Meeny"));
+        assertTrue(answer.contains("Miny is -8 days older than Meeny"));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.gumtree.addressbook;
 
 import com.gumtree.addressbook.dao.AddressBookDao;
+import com.gumtree.addressbook.domain.Question;
 import com.gumtree.addressbook.resolver.Resolver;
 
 import java.io.StringReader;
@@ -30,7 +31,7 @@ public class Config
 {
     private Properties properties;
     private Map<String, Resolver> resolvers;
-    private List<String[]> questions;
+    private List<Question> questions;
     private AddressBookDao dao;
 
     public Config(String configFile, String questionFile)
@@ -106,19 +107,27 @@ public class Config
      */
     private void prepareQuestions(Properties questions)
     {
-        List<String[]> list = new ArrayList<>();
+        List<Question> list = new ArrayList<>();
         for (Map.Entry<Object, Object> entry : questions.entrySet())
         {
+            Question q = new Question();
             String[] values = entry.getValue().toString().split(";");
-            String[] items = new String[values.length + 1];
-            items[0] = entry.getKey().toString();
-            IntStream.range(0, values.length).forEach(i -> items[i + 1] = values[i].trim());
-            list.add(items);
+            q.setKey(entry.getKey().toString().trim());
+            q.setQuestion(values[0].trim());
+            q.setResolverKey(values[1].trim());
+            if (values.length > 2)
+            {
+                int len = values.length;
+                String[] parms = new String[len - 2];
+                IntStream.range(2, len).forEach(i -> parms[i - 2] = values[i].trim());
+                q.setParms(parms);
+            }
+            list.add(q);
         }
-        this.questions = list.stream().sorted((a,b) -> a[0].compareTo(b[0])).collect(toList());
+        this.questions = list.stream().sorted((a,b) -> a.getKey().compareTo(b.getKey())).collect(toList());
     }
 
-    public List<String[]> getQuestions()
+    public List<Question> getQuestions()
     {
         return questions;
     }

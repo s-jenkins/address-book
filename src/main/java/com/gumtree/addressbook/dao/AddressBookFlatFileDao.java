@@ -21,13 +21,14 @@ import static java.util.stream.Collectors.toList;
 
 public class AddressBookFlatFileDao implements AddressBookDao
 {
-    public static final String DATA_FILE_KEY = "AddressBookFlatFileDao.datafilekey";
-    public static final String ASSUME_20TH_CENT_AFTER = "AddressBookFlatFileDao.assume20thcentuaryafter";
+    public static final String DATA_FILE_KEY = "addressbookflatfiledao.filename";
+    public static final String ASSUME_20TH_CENT_AFTER = "addressbookflatfiledao.assume20thCentuaryAfter";
 
     List<AddressBookEntry> addressBook;
     private String dataSource;
     private int assume20thCentuaryAfter;
 
+    @Override
     public void setProperties(Properties properties)
     {
         this.dataSource = properties.getProperty(DATA_FILE_KEY);

@@ -2,6 +2,7 @@ package com.gumtree.addressbook;
 
 import com.gumtree.addressbook.dao.AddressBookDao;
 import com.gumtree.addressbook.dao.AddressBookFlatFileDao;
+import com.gumtree.addressbook.domain.Question;
 import com.gumtree.addressbook.resolver.Resolver;
 import org.junit.Test;
 
@@ -18,25 +19,22 @@ public class ConfigTest
     @Test
     public void getQuestions() throws Exception
     {
-        List<String[]> questions = config.getQuestions();
+        List<Question> questions = config.getQuestions();
 
-        assertEquals("QA", questions.get(0)[0]);
-        assertEquals(5, questions.get(0).length);
-        assertEquals("Question #1", questions.get(0)[1]);
-        assertEquals("key1", questions.get(0)[2]);
-        assertEquals("P1", questions.get(0)[3]);
-        assertEquals("P2", questions.get(0)[4]);
+        assertEquals("QA", questions.get(0).getKey());
+        assertEquals("Question #1", questions.get(0).getQuestion());
+        assertEquals("key1", questions.get(0).getResolverKey());
+        assertEquals("P1", questions.get(0).getParms()[0]);
+        assertEquals("P2", questions.get(0).getParms()[1]);
 
-        assertEquals("QB", questions.get(1)[0]);
-        assertEquals(4, questions.get(1).length);
-        assertEquals("Question #2", questions.get(1)[1]);
-        assertEquals("key2", questions.get(1)[2]);
-        assertEquals("P3", questions.get(1)[3]);
+        assertEquals("QB", questions.get(1).getKey());
+        assertEquals("Question #2", questions.get(1).getQuestion());
+        assertEquals("key2", questions.get(1).getResolverKey());
+        assertEquals("P3", questions.get(1).getParms()[0]);
 
-        assertEquals("QC", questions.get(2)[0]);
-        assertEquals(3, questions.get(2).length);
-        assertEquals("Question #3", questions.get(2)[1]);
-        assertEquals("key3", questions.get(2)[2]);
+        assertEquals("QC", questions.get(2).getKey());
+        assertEquals("Question #3", questions.get(2).getQuestion());
+        assertEquals("key3", questions.get(2).getResolverKey());
     }
 
     @Test

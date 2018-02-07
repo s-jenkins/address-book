@@ -1,6 +1,7 @@
 package com.gumtree.addressbook.service;
 
 import com.gumtree.addressbook.domain.AddressBookEntry;
+import com.gumtree.addressbook.domain.Question;
 import com.gumtree.addressbook.domain.Sex;
 import com.gumtree.addressbook.resolver.SexCounter;
 import org.junit.Test;
@@ -32,8 +33,11 @@ public class QuestionProcessorTest
         data.add(entry);
 
         qp.setResolvers(singletonMap("sex.counter", new SexCounter()));
+        Question q = new Question();
+        q.setResolverKey("sex.counter");
+        q.setParms(new String[] {"FEMALE"});
 
-        String answer = qp.process("How many females?", "sex.counter", data, "FEMALE");
+        String answer = qp.process(q, data);
         assertTrue(answer.contains("2 female"));
     }
 
@@ -46,9 +50,11 @@ public class QuestionProcessorTest
 
         qp.setResolvers(emptyMap());
 
-        String answer = qp.process("How many females?", "sex.counter", data, "FEMALE");
+        Question q = new Question();
+        q.setResolverKey("sex.counter");
+        q.setParms(new String[] {"FEMALE"});
+
+        String answer = qp.process(q, data);
         assertTrue(answer.contains("I cannot answer this question"));
     }
-
-
 }

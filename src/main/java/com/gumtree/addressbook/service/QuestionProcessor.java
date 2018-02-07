@@ -1,6 +1,7 @@
 package com.gumtree.addressbook.service;
 
 import com.gumtree.addressbook.domain.AddressBookEntry;
+import com.gumtree.addressbook.domain.Question;
 import com.gumtree.addressbook.resolver.Resolver;
 
 import java.util.List;
@@ -11,13 +12,13 @@ import static java.lang.String.format;
 public class QuestionProcessor
 {
     private Map<String, Resolver> resolvers;
-    String process(String question, String resolverKey, List<AddressBookEntry> data, String... parms)
+    public String process(Question question, List<AddressBookEntry> data)
     {
-        Resolver resolver = resolvers.get(resolverKey);
+        Resolver resolver = resolvers.get(question.getResolverKey());
         if (resolver == null) {
-            return format("I cannot answer this question - no resolver found for key: %s", resolverKey);
+            return format("I cannot answer this question - no resolver found for key: %s", question.getResolverKey());
         }
-        return resolver.answer(data, parms);
+        return resolver.answer(data, question.getParms());
     }
 
     public void setResolvers(Map<String, Resolver> resolvers)
