@@ -5,7 +5,7 @@
 	<artifactId>address-book</artifactId>
 	<version>0.0.1</version>
 	<name>Address Book</name>
-	<description>Gumtree Address Book project</description>
+	<description>Gumtree Address Book project from ages ago</description>
 	<groupId>com.gumtree.addressbook</groupId>
 
 	<build>
